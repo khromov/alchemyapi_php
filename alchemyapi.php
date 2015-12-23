@@ -21,13 +21,12 @@ class AlchemyAPI {
 	
 	private $_api_key;
 	private $_ENDPOINTS;
-	private $_BASE_URL = 'http://access.alchemyapi.com/calls';
+	private $_BASE_URL = 'http://gateway-a.watsonplatform.net/calls';
 
 	/**
-	 * Constructor
+	 * AlchemyAPI constructor.
 	 *
-	 * @param string
-	 * @return void
+	 * @param $key
 	 */
 	public function __construct($key)  {
 		$this->_api_key = $key;

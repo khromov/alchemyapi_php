@@ -76,6 +76,27 @@ class AlchemyAPI {
 		$this->_ENDPOINTS['taxonomy']['url'] = '/url/URLGetRankedTaxonomy';
 		$this->_ENDPOINTS['taxonomy']['html'] = '/html/HTMLGetRankedTaxonomy';
 		$this->_ENDPOINTS['taxonomy']['text'] = '/text/TextGetRankedTaxonomy';
+		$this->_ENDPOINTS['face']['image'] = '/image/ImageGetRankedImageFaceTags';
+		$this->_ENDPOINTS['face']['url'] = '/url/URLGetRankedImageFaceTags';
+	}
+
+	/**
+	 *
+	 */
+	public function face_detection($flavor, $image, $options = array()) {
+		//Make sure this request supports the flavor
+		if (!array_key_exists($flavor, $this->_ENDPOINTS['face'])) {
+			return array('status'=>'ERROR','statusInfo'=>'Method ' . $flavor . ' not available');
+		}
+
+		//Add the image to the options and analyze
+		if($flavor=='url'){
+			$options[$flavor] = $image;
+			return $this->analyze($this->_ENDPOINTS['face'][$flavor], $options);
+		}
+		else{
+			return $this->analyzeImage($this->_ENDPOINTS['face'][$flavor], $options, $image);
+		}
 	}
 
 	/**
@@ -115,7 +136,6 @@ class AlchemyAPI {
 			return $this->analyzeImage($this->_ENDPOINTS['image_keywords'][$flavor], $options, $image);	
 		}
 	}
-
 
 	/**
 	  *	Extracts the entities for text, a URL or HTML.
